@@ -12,6 +12,9 @@ BaseEntity = {
     return ent
   end,
   update = function(self)
+    -- reset states
+    self.overlaps = false
+
     --pre-update
     if self.pre_update then
       self:pre_update()
@@ -83,6 +86,7 @@ BaseEntity = {
     end
   end,
   draw = function(self)
+    if self.hidden then return end
     local x = self.x - TILESIZE / 2
     local y = self.y - TILESIZE / 2
     color(9)

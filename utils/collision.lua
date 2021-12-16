@@ -1,5 +1,6 @@
 local function ent_collision(e1,e2)
   if e1 == e2 then return false end
+  if not e1.r or not e2.r then return false end
   if abs(e1.mx - e2.mx) >= 2 and abs(e1.my - e2.my) >= 2 then
     return false, 0
   end

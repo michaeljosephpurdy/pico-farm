@@ -2,7 +2,6 @@ Farm={
   rescued = 0,
   abducted = 0,
   init = function()
-    --ent_new(100,100,'ufo')
     ent_new(100,100,'ufo')
     ent_new(20,20,'cow')
     ent_new(40,40,'cow')
@@ -21,6 +20,7 @@ Farm={
     EntitySelection:new()
   end,
   update=function(self)
+    Camera.update()
     EntitySelection:update()
     for e in all(goodguys) do
       e:update()
@@ -31,6 +31,7 @@ Farm={
   end,
   draw=function(self)
     cls()
+    Camera.draw()
     map()
     for e in all(goodguys) do
       e:draw()
