@@ -37,6 +37,9 @@ local data={
   pre_update=Badguy.spotlight_update,
   draw_bg=function(self)
   end,
+  pre_update=function(self)
+
+  end,
   post_update=function(self)
     self.hidden = false
   end,
