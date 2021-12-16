@@ -29,31 +29,34 @@ BaseEntity = {
     end
  
     --map collisions
-    local flying = self.ignores_collisions
-    if self.xr > 0.75 and
-       Collision.map(self.mx + 1, self.my, flying) then
-     self.xr=.75
-     if self.bounce then
-      self.dx=-self.dx
-     end
-    elseif self.xr<.25 and
-       Collision.map(self.mx-1, self.my,flying) then
-     self.xr=.25
-     if self.bounce then
-      self.dx=-self.dx
-     end
-    end if self.yr>.75 and
-       Collision.map(self.mx,self.my+1,flying) then
-     self.yr=.75
-     if self.bounce then
-      self.dy=-self.dy
-     end
-    elseif self.yr<.25 and
-       Collision.map(self.mx,self.my-1,flying) then
-     self.yr=.25
-     if self.bounce then
-      self.dy=-self.dy
-     end
+    if not self.ignores_collisions then
+      --move somewhere else
+      local flying = self.flying
+      if self.xr > 0.75 and
+         Collision.map(self.mx + 1, self.my, flying) then
+       self.xr=.75
+       if self.bounce then
+        self.dx=-self.dx
+       end
+      elseif self.xr<.25 and
+         Collision.map(self.mx-1, self.my,flying) then
+       self.xr=.25
+       if self.bounce then
+        self.dx=-self.dx
+       end
+      end if self.yr>.75 and
+         Collision.map(self.mx,self.my+1,flying) then
+       self.yr=.75
+       if self.bounce then
+        self.dy=-self.dy
+       end
+      elseif self.yr<.25 and
+         Collision.map(self.mx,self.my-1,flying) then
+       self.yr=.25
+       if self.bounce then
+        self.dy=-self.dy
+       end
+      end
     end
 
     --grid translations
@@ -84,6 +87,8 @@ BaseEntity = {
     if (self.final_update) then
        self:final_update()
     end
+  end,
+  draw_bg = function(self)
   end,
   draw = function(self)
     if self.hidden then return end

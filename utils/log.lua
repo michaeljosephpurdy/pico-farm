@@ -1,5 +1,5 @@
 Log={
   msg=function(msg)
-    printh(msg, '@clip')
+    printh(msg, 'picofarm')
   end,
 }

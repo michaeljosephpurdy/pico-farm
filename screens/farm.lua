@@ -2,7 +2,7 @@ Farm={
   rescued = 0,
   abducted = 0,
   init = function()
-    ent_new(100,100,'ufo')
+    ent_new(108,100,'ufo')
     ent_new(20,20,'cow')
     ent_new(40,40,'cow')
     ent_new(60,60,'chicken')

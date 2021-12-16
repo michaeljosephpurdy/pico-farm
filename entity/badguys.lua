@@ -7,7 +7,7 @@ local function spotlight_update(e)
   end
 end
 
-local function ufo_update(e)
+local function ufo_pre_update(e)
 e.beam_anim+=.1
   if e.beam_anim>=e.beam_anim_end+1 then
     e.beam_anim=e.beam_anim_start
@@ -50,6 +50,7 @@ e.beam_anim+=.1
       end
     end
   end
+  e.show_spotlight=true
 end
 local function ufo_draw_bg(e)
   local x=e.x-TILESIZE/2
@@ -71,9 +72,41 @@ local function ufo_draw(e)
   spr(6,e.x,y+yoffset)
 end
 
+function spotlight_pre_update(e)
+  if e.state == 'wait' then
+    e.state_time -= 1
+    if e.state_time < 0 then
+      e.state = e.next_state
+      e.next_state = nil
+    end
+  elseif e.state == 'go-left' then
+    e.dx = -e.speed
+  elseif e.state == 'go-right' then
+    e.dx = e.speed
+  end
+end
+
+function spotlight_post_update(e)
+  if e.state == 'go-left' and e.mx < e.ufo.mx - 1 then
+    e.state = 'wait'
+    e.state_time = 40
+    e.next_state = 'go-right'
+  end
+  if e.state == 'go-right' and e.mx > e.ufo.mx + 1 then
+    e.state = 'wait'
+    e.state_time = 40
+    e.next_state = 'go-left'
+  end
+  Log.msg(e.state)
+  Log.msg(e.next_state)
+  Log.msg(e.state_time)
+  e.hidden = not e.ufo.show_spotlight
+end
+
 Badguy = {
-  spotlight_update=spotlight_update,
-  ufo_update=ufo_update,
+  spotlight_post_update=spotlight_post_update,
+  spotlight_pre_update=spotlight_pre_update,
+  ufo_pre_update=ufo_pre_update,
   ufo_draw_bg=ufo_draw_bg,
   ufo_draw=ufo_draw,
 }

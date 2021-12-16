@@ -1,5 +1,5 @@
 Goodguy = {
-  update = function(e)
+  pre_update = function(e)
     if e.selected then
       if btn(➡️) then
         e.dx=e.speed

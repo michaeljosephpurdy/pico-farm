@@ -5,15 +5,15 @@ goodguys={}
 local data={
   cow={
     s=1, speed=0.04, r=3,
-    pre_update=Goodguy.update,
+    pre_update=Goodguy.pre_update,
   },
   chicken={
     s=2,speed=0.1,r=2,
-    pre_update=Goodguy.update,
+    pre_update=Goodguy.pre_update,
   },
   pig={
     s=4,speed=0.05,r=2,
-    pre_update=Goodguy.update,
+    pre_update=Goodguy.pre_update,
   },
   ufo={
     s=3,speed=0.1,r=4,
@@ -21,10 +21,10 @@ local data={
     beam_anim=16,
     beam_anim_start=16,
     beam_anim_end=19,
-    pre_update=Badguy.ufo_update,
+    pre_update=Badguy.ufo_pre_update,
     draw_bg=Badguy.ufo_draw_bg,
     draw=Badguy.ufo_draw,
-    ignores_collisions=true,
+    flying=true,
     show_beam=false,
     show_spotlight=true,
     bounce=true,
@@ -32,17 +32,14 @@ local data={
     state_t=40,
  },
  spotlight={
-  s=20, speed=0.2, r=2,
+  s=20, speed=0.05, r=2,
   badguy=true,
-  pre_update=Badguy.spotlight_update,
+  state='go-left',
+  ignores_collisions=true,
+  pre_update=Badguy.spotlight_pre_update,
   draw_bg=function(self)
   end,
-  pre_update=function(self)
-
-  end,
-  post_update=function(self)
-    self.hidden = false
-  end,
+  post_update=Badguy.spotlight_post_update,
  }
 }
 
@@ -53,8 +50,9 @@ ent_new=function(x,y,t)
     e[k]=v
   end
   if t=='ufo' then
-    e.spotlight=ent_new(x,y,'spotlight')
-    e.spotlight.ufo=e
+    local spotlight = ent_new(x,y,'spotlight')
+    spotlight.ufo = e
+    e.spotlight = spotlight
   end
   if e.badguy then
     add(badguys,e)
