@@ -3,7 +3,9 @@ Intro={
   end,
   update = function(self)
     if btnp(❎) then
+      Farm.init()
       gamestate='farm'
+
     end
   end,
   draw = function(self)

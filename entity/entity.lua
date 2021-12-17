@@ -16,7 +16,7 @@ local data={
     pre_update=Goodguy.pre_update,
   },
   ufo={
-    s=3,speed=0.1,r=4,
+    s=3,speed=0.04,r=4,
     badguy=true,
     beam_anim=16,
     beam_anim_start=16,

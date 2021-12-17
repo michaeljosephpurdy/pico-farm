@@ -22,6 +22,7 @@ Farm={
   update=function(self)
     Camera.update()
     EntitySelection:update()
+    Timer.update()
     for e in all(goodguys) do
       e:update()
     end
